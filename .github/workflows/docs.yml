@@ -1,0 +1,33 @@
+name: docs
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  literate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: crystal-lang/install-crystal@v1
+
+      - name: Build crycco
+        run: |
+          git clone --depth 1 https://github.com/ralsina/crycco /tmp/crycco
+          shards build --release
+        working-directory: /tmp/crycco
+
+      - name: Render literate documentation
+        run: /tmp/crycco/bin/crycco src/smallpt.cr
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          force_orphan: true

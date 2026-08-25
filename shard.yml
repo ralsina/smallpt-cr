@@ -1,0 +1,6 @@
+name: smallpt-cr
+version: 0.1.0
+crystal: ">= 1.10"
+targets:
+  smallpt:
+    main: src/smallpt.cr
