@@ -36,10 +36,11 @@ can your language render N samples" became a standard shootout.
 
 This repository contains:
 
-| File | Description |
-|---|---|
-| `smallpt.cpp` | The original algorithm, compiled with `g++ -O3` |
-| `src/smallpt.cr` | A faithful Crystal port, built with `shards build --release` |
+<table>
+  <tr><th>File</th><th>Description</th></tr>
+  <tr><td><code>smallpt.cpp</code></td><td>The original algorithm, compiled with <code>g++ -O3</code></td></tr>
+  <tr><td><code>src/smallpt.cr</code></td><td>A faithful Crystal port, built with <code>shards build --release</code></td></tr>
+</table>
 
 The port is deliberately *algorithmically identical*: same scene, same camera,
 same sampling strategy, same math. Both implementations are single code paths
@@ -91,12 +92,13 @@ stack-allocated vectors, no GC pressure in the hot loop, monomorphic dispatch.
 
 Measured on a 12-core desktop (1024×768, best of runs):
 
-| Implementation | 128 spp | Speedup vs own serial |
-|---|---|---|
-| C++ `-O3`, single thread | ~114.8s | 1.0x |
-| Crystal `--release`, single thread | ~120.5s | 1.0x |
-| C++ `-O3 -fopenmp`, 12 threads | ~14.6s | 7.9x |
-| Crystal `--release`, execution contexts | ~15.1s | 8.0x |
+<table>
+  <tr><th>Implementation</th><th>128 spp</th><th>Speedup vs own serial</th></tr>
+  <tr><td>C++ <code>-O3</code>, single thread</td><td align="right">~114.8s</td><td align="right">1.0x</td></tr>
+  <tr><td>Crystal <code>--release</code>, single thread</td><td align="right">~120.5s</td><td align="right">1.0x</td></tr>
+  <tr><td>C++ <code>-O3 -fopenmp</code>, 12 threads</td><td align="right">~14.6s</td><td align="right">7.9x</td></tr>
+  <tr><td>Crystal <code>--release</code>, execution contexts</td><td align="right">~15.1s</td><td align="right">8.0x</td></tr>
+</table>
 
 **The gap is about 5%**, both serial and parallel — effectively parity.
 Crystal's ahead-of-time compilation, unboxed structs, and lack of garbage
