@@ -25,6 +25,7 @@ jobs:
 
       - name: Build site
         run: |
+          mkdir -p docs
           cp assets/render.png docs/render.png
           /tmp/crycco/bin/crycco --output /tmp/site README.md src/smallpt.cr
           cp -r /tmp/site/. docs/
