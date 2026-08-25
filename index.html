@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>README.md</title>
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chivo&family=Chivo+Mono&display=swap" rel="stylesheet">
+    <!-- Pico CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
+    <!-- Custom style-->
+    <style>
+        .b {color: #d8d8d8;background-color: #181818;font-weight: 600;tab-size: 8;}.lh {color: #7cafc2;background-color: #282828;}.t {color: #d8d8d8;}.e {color: #ab4642;}.c {color: #585858;}.cp {color: #a16946;}.cpf {color: #a1b56c;font-weight: 600;}.k {color: #ba8baf;}.kt {color: #ab4642;}.na {color: #7cafc2;}.nb {color: #ab4642;}.nbp {color: #ab4642;font-style: italic;}.nc {color: #7cafc2;}.no {color: #dc9656;}.nd {color: #dc9656;font-style: italic;}.nf {color: #7cafc2;}.nn {color: #ba8baf;font-style: italic;}.nt {color: #ba8baf;}.nv {color: #7cafc2;}.nvi {color: #ab4642;}.m {color: #dc9656;}.o {color: #86c1b9;}.ow {color: #ba8baf;}.l {color: #a1b56c;}.s {color: #a1b56c;}.lsi {color: #a16946;}.sr {color: #86c1b9;}.ss {color: #dc9656;}.p {color: #d8d8d8;}.tw {color: #d8d8d8;}.cm {color: #585858;font-style: italic;}.s1 {color: #a1b56c;}.lso {color: #a1b56c;}.sc {color: #a1b56c;}.sb {color: #a1b56c;}.sa {color: #dc9656;}.sd {color: #7cafc2;font-style: italic;}.se {color: #a16946;}.lnf {color: #dc9656;}.lnh {color: #dc9656;}.lni {color: #dc9656;}.lno {color: #dc9656;}.lnb {color: #dc9656;}.kr {color: #ba8baf;font-weight: 600;}.kd {color: #ba8baf;font-style: italic;}.kn {color: #ba8baf;}.kp {color: #ba8baf;font-style: italic;}.kc {color: #ab4642;}.cs {color: #a16946;font-weight: 600;}.ch {color: #585858;font-weight: 600;}.gh {color: #7cafc2;font-weight: 600;}.gu {color: #7cafc2;font-weight: 600;font-style: italic;}.gs {color: #ab4642;font-weight: 600;}.ge {color: #dc9656;font-style: italic;}.gd {color: #ab4642;}.gi {color: #a1b56c;}.gp {color: #7cafc2;}.go {color: #d8d8d8;}.gt {color: #ab4642;}.gr {color: #ab4642;}.gl {color: #d8d8d8;text-decoration: underline;}.x {color: #d8d8d8;}
+    </style>
+    
+<style>
+/* These are just a tiny fraction of the pico color variables,
+   will add more as I know what they do and which semantic
+   value from base16 may make sense */
+
+/* Theme: Default Dark */
+/* Author: Chris Kempson (http://chriskempson.com) */
+
+:root {
+    --pico-background-color: #181818; /* Default backround */
+    --pico-color: #d8d8d8; /* Default foreground */
+    --pico-text-selection-color: #383838; /* Selection background */
+    --pico-primary: #7cafc2; /* Headings */
+    --pico-primary-underline: var(--pico-primary);
+    --pico-primary-background: #383838;
+    --pico-primary-hover: #dc9656; /* Link URL */
+    --pico-primary-hover-underline: var(--pico-primary-hover);
+    --pico-h1-color: var(--pico-primary); /* Default foreground */
+    --pico-h2-color: var(--pico-primary); /* Default foreground */
+    --pico-h3-color: var(--pico-primary); /* Default foreground */
+    --pico-h4-color: var(--pico-primary); /* Default foreground */
+    --pico-h5-color: var(--pico-primary); /* Default foreground */
+    --pico-h6-color: var(--pico-primary); /* Default foreground */
+}
+</style>
+
+    
+<style>
+    html * {
+        font-family: Chivo, sans-serif;
+        font-weight: 300;
+        overflow: visible;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    article.prose {
+        max-width: 60rem;
+        width: 100%;
+        margin: 0 auto;
+        padding-bottom: 2rem;
+    }
+
+    footer {
+        text-align: center;
+        border-top: solid 1px #b8b8b8;
+        background-color: #181818;
+        margin-top: auto;
+    }
+
+    code, div.prose>pre>code {
+        font-family: 'Chivo Mono', monospace !important;
+        padding: .15rem;
+        background-color: #282828 !important;
+    }
+
+    code>span {
+        font-family: 'Chivo Mono', monospace !important;
+    }
+
+    article.prose>pre>code {
+        overflow-x: auto !important;
+        display: block;
+    }
+</style>
+
+    
+<style>
+    aside {
+        position: fixed;
+        top: 0;
+        right: -20em;
+        bottom: 0;
+        width: 20em;
+        background: var(--pico-background-color);
+        overflow-y: auto;
+        z-index: 100;
+        padding: 1em;
+        transition: right .25s;
+        opacity: 90%;
+    }
+
+    #show-sidebar,
+    #close-sidebar {
+        position: absolute;
+        top: 0em;
+        right: 0em;
+        padding: .5em;
+        color: var(--pico-color-slate-100);
+        text-decoration: none;
+        background-color: var(--pico-color-slate-500);
+        border-radius: 0 0 0 .5em;
+        opacity: 75%;
+        cursor: pointer;
+    }
+
+    #show-sidebar {
+        position: fixed;
+    }
+</style>
+
+</head>
+
+<body>
+    
+<a id="show-sidebar" class="secondary" onclick="document.getElementById('sidebar').style.right='0em'">⬅
+</a>
+<aside id="sidebar">
+    <a id="close-sidebar" class="secondary" onclick="document.getElementById('sidebar').style.right='-20em'">✖</a>
+    <header>
+        <h2>Documents</h2>
+    </header>
+    <nav>
+        <ul>
+            
+            <li>
+                
+                <span>README.md</span>
+                
+            </li>
+            
+            <li>
+                
+                <a href="src/smallpt.cr.html"><span>src/smallpt.cr</span></a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</aside>
+
+    <main class="container">
+        
+
+<article class="prose" id="smallpt-cr">
+    <h1>smallpt-cr</h1>
+<p>A Crystal port of <a href="http://www.kevinbeason.com/smallpt/">smallpt</a>, Kevin Beason's
+famous ~100-line unbiased path tracer, written to explore the performance gap
+between optimized C++ and optimized Crystal.</p>
+<blockquote>
+<p><strong>📖 This is literate programming.</strong> The source code is written to be <em>read</em>:
+every section of the algorithm is explained in prose, side by side with the
+code that implements it. Start here:
+<strong><a href="https://ralsina.github.io/smallpt-cr/src/smallpt.cr.html">Read the annotated, literate source</a></strong> —
+it's the best way to understand both the path tracing algorithm and this port.</p>
+</blockquote>
+<p><img src="render.png" alt="Rendered scene" /></p>
+<p><em>The classic smallpt scene: two diffuse walls (red and blue), a mirror sphere
+and a glass sphere, lit only by a spherical light, rendered at 800 samples per
+pixel. Rendered by the Crystal implementation.</em></p>
+<h2>What is smallpt?</h2>
+<p>smallpt is a global illumination renderer written by Kevin Beason in 2006 as a
+demonstration that physically-based rendering could fit in about 100 lines of
+C++. It is a <em>path tracer</em>: instead of computing light analytically, it shoots
+millions of random rays from the camera and follows their bounces around the
+scene, averaging the results. Given enough samples this converges to the
+mathematically correct image — no shortcuts, no fake ambient occlusion maps.</p>
+<p>Its tricks are the classics of Monte Carlo rendering:</p>
+<ul>
+<li><strong>Cosine-weighted importance sampling</strong> for diffuse bounces, so more rays go
+where the lighting contribution is largest.</li>
+<li><strong>Russian roulette</strong> to randomly kill deep ray paths, keeping renders finite
+without biasing the result.</li>
+<li><strong>Fresnel-based probabilistic reflection/refraction</strong> for the glass sphere.</li>
+<li><strong>Tent-filtered supersampling</strong> with 2×2 subpixels per camera sample.</li>
+</ul>
+<p>Because it is tiny, self-contained and computationally brutal, smallpt became a
+popular language benchmark: ports exist for dozens of languages, and &quot;how fast
+can your language render N samples&quot; became a standard shootout.</p>
+<h2>This project</h2>
+<p>This repository contains:</p>
+<table>
+  <tr><th>File</th><th>Description</th></tr>
+  <tr><td><code>smallpt.cpp</code></td><td>The original algorithm, compiled with <code>g++ -O3</code></td></tr>
+  <tr><td><code>src/smallpt.cr</code></td><td>A faithful Crystal port, built with <code>shards build --release</code></td></tr>
+</table>
+<p>The port is deliberately <em>algorithmically identical</em>: same scene, same camera,
+same sampling strategy, same math. Both implementations are single code paths
+that were then parallelized in the idiomatic way for each language:</p>
+<ul>
+<li><strong>C++</strong>: OpenMP (<code>#pragma omp parallel for</code> over scanlines), as in the
+original source.</li>
+<li><strong>Crystal</strong>: fibers distributed over an execution context sized to the CPU
+count, with each row claiming work from a shared atomic counter.</li>
+</ul>
+<p>Each row has its own deterministic random number stream, so output is
+reproducible regardless of thread scheduling.</p>
+<h3>Literate documentation</h3>
+<p>The Crystal source is written in literate style: the prose comments that
+explain the algorithm are the documentation. The rendered version is published
+at <a href="https://ralsina.github.io/smallpt-cr/">ralsina.github.io/smallpt-cr</a> and
+can be regenerated locally with:</p>
+<pre class="b" ><code class="b"><span class="gp">$</span><span class="t"> </span><span class="t">crycco</span><span class="t"> </span><span class="t">README.md</span><span class="t"> </span><span class="t">src/smallpt.cr</span><span class="t">
+</span><span class="t"></span><span class="t"></span></code></pre><h2>Expressiveness: C++ vs Crystal</h2>
+<p>The C++ original is famously terse — it reads like compressed mathematics:
+one-letter variables (<code>r</code>, <code>f</code>, <code>nl</code>, <code>ddn</code>), operator overloading doing double
+duty (<code>%</code> is cross product), implicit conversions everywhere, and all three
+material types dispatched inside one deeply nested function. It's brilliant,
+and nearly unreadable without the accompanying notes.</p>
+<p>The Crystal port keeps the same structure but can afford to be descriptive
+without any runtime cost, because structs are unboxed value types:</p>
+<ul>
+<li><code>record Vec</code> with named methods (<code>#norm</code>, <code>#dot</code>, <code>#mult</code>) instead of
+overloaded operators.</li>
+<li>A <code>ReflT</code> enum (<code>Diffuse</code>, <code>Specular</code>, <code>Refractive</code>) instead of integer
+constants, dispatched with an exhaustive <code>case</code>.</li>
+<li>Descriptive names throughout: <code>subpixel_x</code>, <code>accumulated</code>,
+<code>reflection_type</code>, <code>reflected_ray</code>.</li>
+<li>Each material's shading logic lives in its own branch or helper method
+(<code>radiance_refractive</code>) rather than nested ternaries.</li>
+</ul>
+<p>The interesting result: <strong>none of that readability costs performance</strong>. The
+Crystal version compiles down to essentially the same machine code patterns —
+stack-allocated vectors, no GC pressure in the hot loop, monomorphic dispatch.</p>
+<h2>Performance</h2>
+<h3>Single-threaded, four languages</h3>
+<p>To widen the comparison, this repository also vendors two third-party
+implementations of the same algorithm (see <code>third_party/</code>):</p>
+<ul>
+<li>Rust: <a href="https://github.com/mjm114514/smallpt-rs">mjm114514/smallpt-rs</a>,
+patched to use a single worker thread for a fair comparison</li>
+<li>Go: <a href="https://github.com/ShadowIce/smallpt.go">ShadowIce/smallpt.go</a>, already
+single-threaded</li>
+</ul>
+<p>All four render the same scene with the same sampling strategy, each compiled
+with CPU-native optimizations (<code>-march=native</code> / <code>--mcpu=native</code>):</p>
+<table>
+  <tr><th>Implementation</th><th>128 spp</th><th>Relative</th></tr>
+  <tr><td>Crystal <code>--release --mcpu=native</code></td><td align="right">~96.1s</td><td align="right">1.00</td></tr>
+  <tr><td>C++ <code>-O3 -march=native</code></td><td align="right">~103.5s</td><td align="right">1.08</td></tr>
+  <tr><td>Rust (<code>--release</code>)</td><td align="right">~115.4s</td><td align="right">1.20</td></tr>
+  <tr><td>Go (<code>go build</code>, default GC)</td><td align="right">~132.9s</td><td align="right">1.38</td></tr>
+</table>
+<p><strong>Disclaimer:</strong> these numbers come from <em>one</em> machine (a 12-core Linux
+desktop), one workload, and best-of-two runs. Your mileage will vary with CPU,
+compiler versions, and even compiler flags. Treat them as an anecdote, not a
+benchmark suite.</p>
+<p>The takeaway: all the AOT-compiled languages are within ~10% of each other —
+effectively parity on numeric workloads like this. Go trails by ~35%, plausibly
+due to bounds checking and GC interaction in the hot loop.</p>
+<p>Native-CPU code generation was attempted for all four: it only helped Crystal
+(<code>--mcpu=native</code>, ~18% faster) and C++ (<code>-march=native</code>). For Rust,
+<code>RUSTFLAGS=&quot;-C target-cpu=native&quot;</code> changed nothing measurable; for Go, neither
+<code>GOAMD64=v3</code> nor <code>GOGC=off</code> helped (<code>GOAMD64=v4</code> requires AVX-512 and won't run
+on the test machine at all).</p>
+<h3>Multi-threaded</h3>
+<p>Same machine, 12 threads:</p>
+<table>
+  <tr><th>Implementation</th><th>128 spp</th><th>Speedup vs own serial</th></tr>
+  <tr><td>C++ <code>-O3 -march=native -fopenmp</code></td><td align="right">~12.6s</td><td align="right">8.2x</td></tr>
+  <tr><td>Crystal <code>--release --mcpu=native</code>, execution contexts</td><td align="right">~12.7s</td><td align="right">7.6x</td></tr>
+</table>
+<p><strong>The C++ vs Crystal gap is effectively zero</strong> once both get native-CPU code
+generation — parity, as far as this setup can measure.</p>
+<h3>What didn't help: Float32 vectors</h3>
+<p>Switching <code>Vec</code> from <code>Float64</code> to <code>Float32</code> (a trick that gave a big win in
+another raytracer port) <em>broke</em> this scene: the room walls are spheres of
+radius 10⁵, so sphere intersection computes <code>b*b - op.dot(op) + r*r</code> with
+magnitudes around 10²⁰. At Float32 precision (~7 significant digits) that
+subtraction is pure noise, producing visibly wrong light levels. The algorithm
+is unchanged by precision, but its numerical robustness isn't — smallpt's
+giant-sphere room trick needs Float64.</p>
+<p>Caveats worth knowing:</p>
+<ul>
+<li>The comparison uses <code>--release</code>; debug-mode Crystal is roughly an order of
+magnitude slower.</li>
+<li>Since Crystal 1.21, programs start with parallelism set to 1; you must call
+<code>Fiber::ExecutionContext.default.resize(worker_count)</code> (as this port does)
+or set <code>CRYSTAL_WORKERS</code>.</li>
+</ul>
+<h2>Building and running</h2>
+<pre class="b" ><code class="b"><span class="gp">$</span><span class="t"> </span><span class="t">shards</span><span class="t"> </span><span class="t">install</span><span class="t">          </span><span class="cs"># no dependencies, but harmless</span><span class="t">
+</span><span class="t"></span><span class="t"></span><span class="gp">$</span><span class="t"> </span><span class="t">shards</span><span class="t"> </span><span class="t">build</span><span class="t"> </span><span class="t">--release</span><span class="t">  </span><span class="cs"># builds bin/smallpt (portable build)</span><span class="t">
+</span><span class="t"></span><span class="t"></span><span class="gp">$</span><span class="t"> </span><span class="t">crystal</span><span class="t"> </span><span class="t">build</span><span class="t"> </span><span class="t">--release</span><span class="t"> </span><span class="t">--mcpu</span><span class="o">=</span><span class="t">native</span><span class="t"> </span><span class="t">-o</span><span class="t"> </span><span class="t">bin/smallpt</span><span class="t"> </span><span class="t">src/smallpt.cr</span><span class="t">  </span><span class="cs"># faster</span><span class="t">
+</span><span class="t"></span><span class="t"></span><span class="gp">$</span><span class="t"> </span><span class="t">g++</span><span class="t"> </span><span class="t">-O3</span><span class="t"> </span><span class="t">-march</span><span class="o">=</span><span class="t">native</span><span class="t"> </span><span class="t">-o</span><span class="t"> </span><span class="t">bin/smallpt-cpp</span><span class="t"> </span><span class="t">smallpt.cpp</span><span class="t">             </span><span class="cs"># serial C++</span><span class="t">
+</span><span class="t"></span><span class="t"></span><span class="gp">$</span><span class="t"> </span><span class="t">g++</span><span class="t"> </span><span class="t">-O3</span><span class="t"> </span><span class="t">-march</span><span class="o">=</span><span class="t">native</span><span class="t"> </span><span class="t">-fopenmp</span><span class="t"> </span><span class="t">-o</span><span class="t"> </span><span class="t">bin/smallpt-cpp-mt</span><span class="t"> </span><span class="t">smallpt.cpp</span><span class="t"> </span><span class="cs"># parallel C++</span><span class="t">
+</span><span class="t"></span><span class="t"></span><span class="gp">$</span><span class="t"> </span><span class="o">(</span><span class="nb">cd</span><span class="t"> </span><span class="t">third_party/smallpt-rs</span><span class="t"> </span><span class="o">&amp;&amp;</span><span class="t"> </span><span class="t">cargo</span><span class="t"> </span><span class="t">build</span><span class="t"> </span><span class="t">--release</span><span class="o">)</span><span class="t">   </span><span class="cs"># vendored Rust port</span><span class="t">
+</span><span class="t"></span><span class="t"></span><span class="gp">$</span><span class="t"> </span><span class="t">go</span><span class="t"> </span><span class="t">build</span><span class="t"> </span><span class="t">-o</span><span class="t"> </span><span class="t">/tmp/smallpt-go</span><span class="t"> </span><span class="t">third_party/smallpt.go/smallpt.go</span><span class="t"> </span><span class="cs"># vendored Go port</span><span class="t">
+</span><span class="t"></span><span class="t"></span><span class="t">
+</span><span class="gp">$</span><span class="t"> </span><span class="t">bin/smallpt</span><span class="t"> </span><span class="m">500</span><span class="t">         </span><span class="cs"># render 500 spp (samples/4 subpixel passes)</span><span class="t">
+</span><span class="t"></span><span class="t"></span><span class="gp">$</span><span class="t"> </span><span class="t">bin/smallpt-cpp-mt</span><span class="t"> </span><span class="m">500</span><span class="t">
+</span><span class="t"></span><span class="t"></span><span class="gp">$</span><span class="t"> </span><span class="nv">SMALLPT_WORKERS</span><span class="o">=</span><span class="m">1</span><span class="t"> </span><span class="t">bin/smallpt</span><span class="t"> </span><span class="m">500</span><span class="t">  </span><span class="cs"># force single-threaded rendering</span><span class="t">
+</span><span class="t"></span><span class="t"></span></code></pre><p>All write <code>image.ppm</code> (P3 ASCII format) to the current directory, except the
+Rust port which writes <code>res.png</code>.</p>
+<h3>Lint</h3>
+<pre class="b" ><code class="b"><span class="gp">$</span><span class="t"> </span><span class="t">ameba</span><span class="t">
+</span><span class="t"></span><span class="t"></span></code></pre>
+</article>
+
+
+    </main>
+    <footer>
+        » Generated by <a href="https://crycco.ralsina.me">Crycco</a>
+        » Layout 
+markdown-page
+
+        » Theme: Default Dark
+        » Powered by <a href="https://picocss.com">PicoCSS</a> and <a href="https://www.omnibus-type.com/">Chivo Font
+            Family</a>
+    </footer>
+</body>
+
+</html>
