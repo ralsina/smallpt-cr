@@ -4,6 +4,12 @@ A Crystal port of [smallpt](http://www.kevinbeason.com/smallpt/), Kevin Beason's
 famous ~100-line unbiased path tracer, written to explore the performance gap
 between optimized C++ and optimized Crystal.
 
+> **📖 This is literate programming.** The source code is written to be *read*:
+> every section of the algorithm is explained in prose, side by side with the
+> code that implements it. Start here:
+> **[Read the annotated, literate source](https://ralsina.github.io/smallpt-cr/src/smallpt.cr.html)** —
+> it's the best way to understand both the path tracing algorithm and this port.
+
 ![Rendered scene](assets/render.png)
 
 *The classic smallpt scene: two diffuse walls (red and blue), a mirror sphere
@@ -57,11 +63,12 @@ reproducible regardless of thread scheduling.
 ### Literate documentation
 
 The Crystal source is written in literate style: the prose comments that
-explain the algorithm are the documentation. You can read it rendered as a
-side-by-side annotated source at `docs/smallpt.cr.html`, regenerated with:
+explain the algorithm are the documentation. The rendered version is published
+at [ralsina.github.io/smallpt-cr](https://ralsina.github.io/smallpt-cr/) and
+can be regenerated locally with:
 
 ```console
-$ crycco src/smallpt.cr
+$ crycco README.md src/smallpt.cr
 ```
 
 ## Expressiveness: C++ vs Crystal
