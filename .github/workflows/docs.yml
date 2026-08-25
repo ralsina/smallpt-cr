@@ -26,6 +26,9 @@ jobs:
       - name: Render literate documentation
         run: /tmp/crycco/bin/crycco src/smallpt.cr
 
+      - name: Install pandoc
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq pandoc
+
       - name: Build index page from README
         run: |
           cp assets/render.png docs/render.png
