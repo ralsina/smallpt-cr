@@ -26,16 +26,13 @@ jobs:
       - name: Render literate documentation
         run: /tmp/crycco/bin/crycco src/smallpt.cr
 
-      - name: Install pandoc
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq pandoc
-
       - name: Build index page from README
         run: |
           cp assets/render.png docs/render.png
+          /tmp/crycco/bin/crycco --output /tmp/opencode-index README.md
           sed -e 's|assets/render.png|render.png|' \
               -e 's|docs/smallpt.cr.html|smallpt.cr.html|g' \
-              README.md | pandoc --from gfm --standalone --output docs/index.html \
-            --include-in-header .github/pico-header.html
+              /tmp/opencode-index/README.md.html > docs/index.html
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
