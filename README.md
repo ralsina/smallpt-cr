@@ -107,14 +107,15 @@ implementations of the same algorithm (see `third_party/`):
 - Go: [ShadowIce/smallpt.go](https://github.com/ShadowIce/smallpt.go), already
   single-threaded
 
-All four render the same scene with the same sampling strategy:
+All four render the same scene with the same sampling strategy, each compiled
+with CPU-native optimizations (`-march=native` / `--mcpu=native`):
 
 <table>
   <tr><th>Implementation</th><th>128 spp</th><th>Relative</th></tr>
-  <tr><td>C++ <code>-O3</code></td><td align="right">~112.6s</td><td align="right">1.00</td></tr>
-  <tr><td>Rust (<code>rustc -C opt-level=3</code>)</td><td align="right">~115.4s</td><td align="right">1.02</td></tr>
-  <tr><td>Crystal <code>--release</code></td><td align="right">~117.6s</td><td align="right">1.04</td></tr>
-  <tr><td>Go (<code>go build</code>, default GC)</td><td align="right">~132.9s</td><td align="right">1.18</td></tr>
+  <tr><td>Crystal <code>--release --mcpu=native</code></td><td align="right">~96.1s</td><td align="right">1.00</td></tr>
+  <tr><td>C++ <code>-O3 -march=native</code></td><td align="right">~103.5s</td><td align="right">1.08</td></tr>
+  <tr><td>Rust (<code>--release</code>)</td><td align="right">~115.4s</td><td align="right">1.20</td></tr>
+  <tr><td>Go (<code>go build</code>, default GC)</td><td align="right">~132.9s</td><td align="right">1.38</td></tr>
 </table>
 
 **Disclaimer:** these numbers come from *one* machine (a 12-core Linux
@@ -122,25 +123,32 @@ desktop), one workload, and best-of-two runs. Your mileage will vary with CPU,
 compiler versions, and even compiler flags. Treat them as an anecdote, not a
 benchmark suite.
 
-The takeaway: C++, Rust, and Crystal are within ~5% of each other — compiled,
-ahead-of-time languages with unboxed value types are all effectively at parity
-on numeric workloads like this. Go trails by ~18%, plausibly due to bounds
-checking and GC interaction in the hot loop.
+The takeaway: all the AOT-compiled languages are within ~10% of each other —
+effectively parity on numeric workloads like this. Go trails by ~35%, plausibly
+due to bounds checking and GC interaction in the hot loop.
 
 ### Multi-threaded
 
-Measured on the same 12-core desktop (1024×768, best of runs):
+Same machine, 12 threads:
 
 <table>
   <tr><th>Implementation</th><th>128 spp</th><th>Speedup vs own serial</th></tr>
-  <tr><td>C++ <code>-O3 -fopenmp</code>, 12 threads</td><td align="right">~14.6s</td><td align="right">7.7x</td></tr>
-  <tr><td>Crystal <code>--release</code>, execution contexts</td><td align="right">~15.1s</td><td align="right">8.0x</td></tr>
+  <tr><td>C++ <code>-O3 -march=native -fopenmp</code></td><td align="right">~12.6s</td><td align="right">8.2x</td></tr>
+  <tr><td>Crystal <code>--release --mcpu=native</code>, execution contexts</td><td align="right">~12.7s</td><td align="right">7.6x</td></tr>
 </table>
 
-**The C++ vs Crystal gap is about 5%**, both serial and parallel — effectively
-parity. Crystal's ahead-of-time compilation, unboxed structs, and lack of
-garbage collection pressure in numeric hot loops make it a very credible
-replacement for C++ on this kind of workload.
+**The C++ vs Crystal gap is effectively zero** once both get native-CPU code
+generation — parity, as far as this setup can measure.
+
+### What didn't help: Float32 vectors
+
+Switching `Vec` from `Float64` to `Float32` (a trick that gave a big win in
+another raytracer port) *broke* this scene: the room walls are spheres of
+radius 10⁵, so sphere intersection computes `b*b - op.dot(op) + r*r` with
+magnitudes around 10²⁰. At Float32 precision (~7 significant digits) that
+subtraction is pure noise, producing visibly wrong light levels. The algorithm
+is unchanged by precision, but its numerical robustness isn't — smallpt's
+giant-sphere room trick needs Float64.
 
 Caveats worth knowing:
 
@@ -154,9 +162,10 @@ Caveats worth knowing:
 
 ```console
 $ shards install          # no dependencies, but harmless
-$ shards build --release  # builds bin/smallpt
-$ g++ -O3 -o bin/smallpt-cpp smallpt.cpp            # serial C++
-$ g++ -O3 -fopenmp -o bin/smallpt-cpp-mt smallpt.cpp # parallel C++
+$ shards build --release  # builds bin/smallpt (portable build)
+$ crystal build --release --mcpu=native -o bin/smallpt src/smallpt.cr  # faster
+$ g++ -O3 -march=native -o bin/smallpt-cpp smallpt.cpp             # serial C++
+$ g++ -O3 -march=native -fopenmp -o bin/smallpt-cpp-mt smallpt.cpp # parallel C++
 $ (cd third_party/smallpt-rs && cargo build --release)   # vendored Rust port
 $ go build -o /tmp/smallpt-go third_party/smallpt.go/smallpt.go # vendored Go port
 
