@@ -17,7 +17,7 @@ jobs:
       - uses: crystal-lang/install-crystal@v1
 
       - name: Build crycco
-        run: git clone --depth 1 https://github.com/ralsina/crycco /tmp/crycco
+        run: git clone --depth 1 --branch v0.6.0 https://github.com/ralsina/crycco /tmp/crycco
 
       - name: Compile crycco
         run: shards build
