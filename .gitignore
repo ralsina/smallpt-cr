@@ -2,3 +2,5 @@ bin/
 lib/
 image.ppm
 docs/
+third_party/smallpt-rs/target/
+res.png

@@ -1,0 +1,5 @@
+**/target
+.vscode/
+.vs/
+image.ppm
+.vscode/launch.json

@@ -97,20 +97,50 @@ stack-allocated vectors, no GC pressure in the hot loop, monomorphic dispatch.
 
 ## Performance
 
-Measured on a 12-core desktop (1024×768, best of runs):
+### Single-threaded, four languages
+
+To widen the comparison, this repository also vendors two third-party
+implementations of the same algorithm (see `third_party/`):
+
+- Rust: [mjm114514/smallpt-rs](https://github.com/mjm114514/smallpt-rs),
+  patched to use a single worker thread for a fair comparison
+- Go: [ShadowIce/smallpt.go](https://github.com/ShadowIce/smallpt.go), already
+  single-threaded
+
+All four render the same scene with the same sampling strategy:
+
+<table>
+  <tr><th>Implementation</th><th>128 spp</th><th>Relative</th></tr>
+  <tr><td>C++ <code>-O3</code></td><td align="right">~112.6s</td><td align="right">1.00</td></tr>
+  <tr><td>Rust (<code>rustc -C opt-level=3</code>)</td><td align="right">~115.4s</td><td align="right">1.02</td></tr>
+  <tr><td>Crystal <code>--release</code></td><td align="right">~117.6s</td><td align="right">1.04</td></tr>
+  <tr><td>Go (<code>go build</code>, default GC)</td><td align="right">~132.9s</td><td align="right">1.18</td></tr>
+</table>
+
+**Disclaimer:** these numbers come from *one* machine (a 12-core Linux
+desktop), one workload, and best-of-two runs. Your mileage will vary with CPU,
+compiler versions, and even compiler flags. Treat them as an anecdote, not a
+benchmark suite.
+
+The takeaway: C++, Rust, and Crystal are within ~5% of each other — compiled,
+ahead-of-time languages with unboxed value types are all effectively at parity
+on numeric workloads like this. Go trails by ~18%, plausibly due to bounds
+checking and GC interaction in the hot loop.
+
+### Multi-threaded
+
+Measured on the same 12-core desktop (1024×768, best of runs):
 
 <table>
   <tr><th>Implementation</th><th>128 spp</th><th>Speedup vs own serial</th></tr>
-  <tr><td>C++ <code>-O3</code>, single thread</td><td align="right">~114.8s</td><td align="right">1.0x</td></tr>
-  <tr><td>Crystal <code>--release</code>, single thread</td><td align="right">~120.5s</td><td align="right">1.0x</td></tr>
-  <tr><td>C++ <code>-O3 -fopenmp</code>, 12 threads</td><td align="right">~14.6s</td><td align="right">7.9x</td></tr>
+  <tr><td>C++ <code>-O3 -fopenmp</code>, 12 threads</td><td align="right">~14.6s</td><td align="right">7.7x</td></tr>
   <tr><td>Crystal <code>--release</code>, execution contexts</td><td align="right">~15.1s</td><td align="right">8.0x</td></tr>
 </table>
 
-**The gap is about 5%**, both serial and parallel — effectively parity.
-Crystal's ahead-of-time compilation, unboxed structs, and lack of garbage
-collection pressure in numeric hot loops make it a very credible replacement
-for C++ on this kind of workload.
+**The C++ vs Crystal gap is about 5%**, both serial and parallel — effectively
+parity. Crystal's ahead-of-time compilation, unboxed structs, and lack of
+garbage collection pressure in numeric hot loops make it a very credible
+replacement for C++ on this kind of workload.
 
 Caveats worth knowing:
 
@@ -127,12 +157,16 @@ $ shards install          # no dependencies, but harmless
 $ shards build --release  # builds bin/smallpt
 $ g++ -O3 -o bin/smallpt-cpp smallpt.cpp            # serial C++
 $ g++ -O3 -fopenmp -o bin/smallpt-cpp-mt smallpt.cpp # parallel C++
+$ (cd third_party/smallpt-rs && cargo build --release)   # vendored Rust port
+$ go build -o /tmp/smallpt-go third_party/smallpt.go/smallpt.go # vendored Go port
 
 $ bin/smallpt 500         # render 500 spp (samples/4 subpixel passes)
 $ bin/smallpt-cpp-mt 500
+$ SMALLPT_WORKERS=1 bin/smallpt 500  # force single-threaded rendering
 ```
 
-Both write `image.ppm` (P3 ASCII format) to the current directory.
+All write `image.ppm` (P3 ASCII format) to the current directory, except the
+Rust port which writes `res.png`.
 
 ### Lint
 

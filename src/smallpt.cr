@@ -267,7 +267,7 @@ canvas = Slice(Vec).new(width * height, Vec.new)
 # reproducible no matter which worker gets which row.
 start_time = Time.instant
 
-workers = System.cpu_count
+workers = ENV["SMALLPT_WORKERS"]?.try(&.to_i) || System.cpu_count
 Fiber::ExecutionContext.default.resize(workers)
 next_row = Atomic(Int32).new(0)
 done_rows = Atomic(Int32).new(0)
