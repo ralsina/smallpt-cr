@@ -127,6 +127,12 @@ The takeaway: all the AOT-compiled languages are within ~10% of each other —
 effectively parity on numeric workloads like this. Go trails by ~35%, plausibly
 due to bounds checking and GC interaction in the hot loop.
 
+Native-CPU code generation was attempted for all four: it only helped Crystal
+(`--mcpu=native`, ~18% faster) and C++ (`-march=native`). For Rust,
+`RUSTFLAGS="-C target-cpu=native"` changed nothing measurable; for Go, neither
+`GOAMD64=v3` nor `GOGC=off` helped (`GOAMD64=v4` requires AVX-512 and won't run
+on the test machine at all).
+
 ### Multi-threaded
 
 Same machine, 12 threads:
