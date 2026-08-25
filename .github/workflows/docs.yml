@@ -26,6 +26,14 @@ jobs:
       - name: Render literate documentation
         run: /tmp/crycco/bin/crycco src/smallpt.cr
 
+      - name: Build index page from README
+        run: |
+          cp assets/render.png docs/render.png
+          sed -e 's|assets/render.png|render.png|' \
+              -e 's|docs/smallpt.cr.html|smallpt.cr.html|g' \
+              README.md | pandoc --from gfm --standalone --output docs/index.html \
+            --include-in-header .github/pico-header.html
+
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
