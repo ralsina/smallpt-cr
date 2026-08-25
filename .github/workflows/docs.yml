@@ -23,16 +23,16 @@ jobs:
         run: shards build
         working-directory: /tmp/crycco
 
-      - name: Render literate documentation
-        run: /tmp/crycco/bin/crycco src/smallpt.cr
-
-      - name: Build index page from README
+      - name: Build site
         run: |
           cp assets/render.png docs/render.png
-          /tmp/crycco/bin/crycco --output /tmp/opencode-index README.md
-          sed -e 's|assets/render.png|render.png|' \
-              -e 's|docs/smallpt.cr.html|smallpt.cr.html|g' \
-              /tmp/opencode-index/README.md.html > docs/index.html
+          /tmp/crycco/bin/crycco --output /tmp/site README.md src/smallpt.cr
+          cp -r /tmp/site/. docs/
+          mv docs/README.md.html docs/index.html
+          sed -i 's|README\.md\.html|index.html|g' $(find docs -name '*.html')
+          sed -i -e 's|assets/render\.png|render.png|' \
+                 -e 's|docs/src/smallpt\.cr\.html|src/smallpt.cr.html|g' \
+              docs/index.html
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
